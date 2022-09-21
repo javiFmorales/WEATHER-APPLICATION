@@ -51,9 +51,9 @@ searchBtn.addEventListener("click", function () {
                 temperature.innerHTML = "TEMPERATURE: " + kelvinFahrenheit(data.main.temp) + '°f';
                 humidity.innerHTML = " HUMIDITY: " + (data.main.humidity) + "%";
                 windSpeed.innerHTML = "WIND SPEED: " + (data.wind.speed) + " MPH";
-             
-             
-                if ( searchHistory.length >= 5 ){
+
+
+                if (searchHistory.length >= 5) {
                     searchHistory.pop()
                 }
                 //loggin data onto local storage
@@ -61,14 +61,14 @@ searchBtn.addEventListener("click", function () {
                 localStorage.setItem("cities", JSON.stringify(searchHistory))
 
                 previousSearches.innerHTML = ""
-                for (let i = 0; i < searchHistory.length; i++) {  
+                for (let i = 0; i < searchHistory.length; i++) {
                     var pTag = document.createElement('p')
                     pTag.textContent = searchHistory[i]
-                   //pTag.textContent = searchHistory
+                    //pTag.textContent = searchHistory
                     previousSearches.append(pTag)
                     //console.log(searchHistory)
                 }
-                
+
                 //uv index vars
                 var lon = data.coord.lon
                 console.log(lon)
@@ -94,8 +94,28 @@ searchBtn.addEventListener("click", function () {
                         uvIndex.innerHTML = "UV INDEX: " + (uvData.current.uvi)
 
                         console.log()
+                        
+                        //for loop to display five day forecast
+                        forecast.innerHTML = ""
+                        for (let i = 0; i < uvData.daily.length - 3; i++) {
+                            var divEl = document.createElement("div");
+                            divEl.setAttribute("class", "col-md-2 bg-primery text-black m-2 rounded")
+                            let date2 = document.createElement('p')
+                            let icon2 = document.createElement('img')
+                            let temp = document.createElement('p')
+                            let humidity = document.createElement('p')
+                            var weatherIcon2 = uvData.daily[i].weather[0].icon;
+                            var forecastDate = new Date(uvData.daily[i].dt * 1000);
+                            date2.textContent = forecastDate.toLocaleDateString()
+                            icon2.setAttribute("src", "http://openweathermap.org/img/wn/" + weatherIcon2 + ".png");
+                            icon2.setAttribute("alt", "weather icon")
+                            temp.textContent = 'TEMPERATURE ' + (uvData.daily[i].temp.day) + '°f';
+                            humidity.textContent = 'HUMIDITY ' + (uvData.daily[i].humidity) + "%";
+                            divEl.append(icon2, date2, temp, humidity,)
+                            forecast.append(divEl)
 
-                      
+                        }
+
 
                     });
             })
@@ -103,10 +123,10 @@ searchBtn.addEventListener("click", function () {
     }
 
 });
-for (let i = 0; i < searchHistory.length; i++) {                 
+for (let i = 0; i < searchHistory.length; i++) {
     var pTag = document.createElement('p')
     pTag.textContent = searchHistory[i]
-   //pTag.textContent = searchHistory
+    //pTag.textContent = searchHistory
     previousSearches.append(pTag)
     //console.log(searchHistory)
 }
