@@ -53,6 +53,21 @@ searchBtn.addEventListener("click", function () {
                 windSpeed.innerHTML = "WIND SPEED: " + (data.wind.speed) + " MPH";
              
              
+                if ( searchHistory.length >= 5 ){
+                    searchHistory.pop()
+                }
+                //loggin data onto local storage
+                searchHistory.unshift(data.name)
+                localStorage.setItem("cities", JSON.stringify(searchHistory))
+
+                previousSearches.innerHTML = ""
+                for (let i = 0; i < searchHistory.length; i++) {  
+                    var pTag = document.createElement('p')
+                    pTag.textContent = searchHistory[i]
+                   //pTag.textContent = searchHistory
+                    previousSearches.append(pTag)
+                    //console.log(searchHistory)
+                }
                 
                 //uv index vars
                 var lon = data.coord.lon
