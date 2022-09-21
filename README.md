@@ -5,4 +5,4 @@ On this challenge we were prompted to create a weather forecast app that will di
 The user would be able to see the past cities they have looked up 
 
 
-link to deployed application :
+link to deployed application :https://javifmorales.github.io/WEATHER-APPLICATION/
